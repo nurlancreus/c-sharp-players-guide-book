@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Part2___OOP.Models.Classes
 {
-
     public class Asteroid
     {
         public float PositionX { get; private set; }
