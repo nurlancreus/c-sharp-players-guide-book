@@ -9,43 +9,78 @@ namespace Part2___Catacombs_of_theClass.Models.Helpers
 {
     internal class Utilities
     {
-        public static Color? MakeColorAndPrint(string colorName)
+        internal static class EnumReader
         {
-            Color color = null;
-            switch (colorName.ToLower())
+            public static T? ReadEnum<T>(string message) where T : struct, Enum
             {
-                case "white":
-                    color = Color.MakeWhite();
-                    break;
-                case "black":
-                    color = Color.MakeBlack();
-                    break;
-                case "red":
-                    color = Color.MakeRed();
-                    break;
-                case "orange":
-                    color = Color.MakeOrange();
-                    break;
-                case "yellow":
-                    color = Color.MakeYellow();
-                    break;
-                case "green":
-                    color = Color.MakeGreen();
-                    break;
-                case "blue":
-                    color = Color.MakeBlue();
-                    break;
-                case "purple":
-                    color = Color.MakePurple();
-                    break;
-                default:
-                    Console.WriteLine($"Invalid color: {colorName}");
-                    break;
+                while (true)
+                {
+                    Console.Write(message);
+                    string? input = Console.ReadLine();
+
+                    if (Enum.TryParse(input, true, out T entity) && Enum.IsDefined(typeof(T), entity)) return entity;
+                    else
+                        throw new ArgumentException($"Invalid input. Please enter a valid enum value. ({EnumsToString<T>(", ")})");
+
+                }
             }
 
-            Console.WriteLine($"You chose {colorName} color.");
-            Console.WriteLine($"Color: {color?.ReadColor()}");
-            return color;
+            static public string EnumsToString<T>(string divider = " ") where T : struct, Enum
+            {
+                return string.Join(divider, Enum.GetNames(typeof(T)));
+            }
         }
+
+        internal static class Colors
+        {
+            public static Color? MakeColor(string colorName)
+            {
+                Color? color = null;
+                switch (colorName.ToLower())
+                {
+                    case "white":
+                        color = Color.White;
+                        break;
+                    case "black":
+                        color = Color.Black;
+                        break;
+                    case "red":
+                        color = Color.Red;
+                        break;
+                    case "orange":
+                        color = Color.Orange;
+                        break;
+                    case "yellow":
+                        color = Color.Yellow;
+                        break;
+                    case "green":
+                        color = Color.Green;
+                        break;
+                    case "blue":
+                        color = Color.Blue;
+                        break;
+                    case "purple":
+                        color = Color.Purple;
+                        break;
+                    default:
+                        Console.WriteLine($"Invalid color: {colorName}");
+                        break;
+                }
+
+                return color;
+            }
+        }
+
+        internal static class ProgramUtils {
+            public static void ExitProgram(ref bool done, string input = "option")
+            {
+                Console.WriteLine("invalid {0}.", input);
+                Console.WriteLine("Quiting Program..");
+                Thread.Sleep(1000);
+                done = true;
+            }
+        }
+
+        
     }
 }

@@ -11,6 +11,20 @@ using System.Threading;
 using System;
 using Color = Part2___Catacombs_of_theClass.Models.Entities.Color;
 using Part2___Catacombs_of_theClass.Models.Helpers;
+using System.Security.Claims;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Xml;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
+using System.Reflection;
+using Microsoft.VisualBasic.FileIO;
+using System.Numerics;
+using System.Reflection.Emit;
+using System.Runtime.Intrinsics.Arm;
+using System.Timers;
 
 namespace Part2___Catacombs_of_theClass
 {
@@ -18,6 +32,7 @@ namespace Part2___Catacombs_of_theClass
     {
         static void Main(string[] args)
         {
+            /*
             #region - Challenge1
             Console.WriteLine("\n\n*********************************");
             Console.WriteLine("***********Challenge1************");
@@ -79,17 +94,9 @@ namespace Part2___Catacombs_of_theClass
             //• In your main method, make two Color-typed variables. Use a constructor to create a color instance
             //and use a static property for the other.Display each of their red, green, and blue channel values.
 
-            static void ExitProgram(ref bool done, string input = "option")
-            {
-                Console.WriteLine("invalid {0}.", input);
-                Console.WriteLine("Quiting Program..");
-                Thread.Sleep(1000);
-                done = true;
-            }
-
             bool isOperationsDone = false;
 
-            //static void Utilities.MakeColor(Color? userColor,  string color)
+            //static void Utilities.Colors.MakeColor(Color? userColor,  string color)
             //{
             //    Console.WriteLine($"You choose {color} color.");
             //    userColor = Color.MakeBlack();
@@ -99,7 +106,17 @@ namespace Part2___Catacombs_of_theClass
             while (!isOperationsDone)
             {
                 Console.WriteLine("You either choose to create custom color or make one of most used ones.");
-                Console.WriteLine("1.For custom Color.\n2.For White.\n3.For Black.\n4.For Red.\n5.For Orange.\n6.For Yellow.\n7.For Green.\n8.For Blue.\n9.For Purple color.\n0. For exit.");
+                Console.WriteLine("" +
+                    "1.For custom Color." +
+                    "\n2.For White." +
+                    "\n3.For Black." +
+                    "\n4.For Red." +
+                    "\n5.For Orange." +
+                    "\n6.For Yellow." +
+                    "\n7.For Green." +
+                    "\n8.For Blue." +
+                    "\n9.For Purple color." +
+                    "\n0.For exit.");
                 Console.WriteLine("Choose one of them.");
                 Color? userColor = null;
 
@@ -119,53 +136,250 @@ namespace Part2___Catacombs_of_theClass
                             if (isUserChooseRed && isUserChooseGreen && isUserChooseBlue)
                             {
                                 userColor = new Color(userRed, userGreen, userBlue);
-                                Console.WriteLine($"Your custom Color: {userColor?.ReadColor()}");
                             }
                             else
                             {
-                                ExitProgram(ref isOperationsDone, "values");
+                                Utilities.ProgramUtils.ExitProgram(ref isOperationsDone, "values");
 
                             }
                             break;
 
                         case 2:
-                            userColor = Utilities.MakeColorAndPrint("White");
+                            userColor = Utilities.Colors.MakeColor("White");
                             break;
                         case 3:
-                            userColor = Utilities.MakeColorAndPrint("Black");
+                            userColor = Utilities.Colors.MakeColor("Black");
                             break;
                         case 4:
-                            userColor = Utilities.MakeColorAndPrint("Red");
+                            userColor = Utilities.Colors.MakeColor("Red");
                             break;
                         case 5:
-                            userColor = Utilities.MakeColorAndPrint("Orange");
+                            userColor = Utilities.Colors.MakeColor("Orange");
                             break;
                         case 6:
-                            userColor = Utilities.MakeColorAndPrint("Yellow");
+                            userColor = Utilities.Colors.MakeColor("Yellow");
                             break;
                         case 7:
-                            userColor = Utilities.MakeColorAndPrint("Green");
+                            userColor = Utilities.Colors.MakeColor("Green");
                             break;
                         case 8:
-                            userColor = Utilities.MakeColorAndPrint("Blue");
+                            userColor = Utilities.Colors.MakeColor("Blue");
                             break;
                         case 9:
-                            userColor = Utilities.MakeColorAndPrint("Purple");
+                            userColor = Utilities.Colors.MakeColor("Purple");
                             break;
                         case 0:
                         default:
 
-                            ExitProgram(ref isOperationsDone);
+                            Utilities.ProgramUtils.ExitProgram(ref isOperationsDone);
                             break;
                     }
+
+                    Console.WriteLine($"Your color is {userColor}.");
 
                 }
                 else
                 {
-                    ExitProgram(ref isOperationsDone);
+                    Utilities.ProgramUtils.ExitProgram(ref isOperationsDone);
 
                 };
+            }
 
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+
+            #endregion;
+
+            #region - Challenge3
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("***********Challenge3************");
+            Console.WriteLine("*********************************");
+
+            //            Boss Battle The Card 100 XP
+            //The digital Realms of C# have playing cards like ours but with some differences. Each card has a color
+            //(red, green, blue, yellow) and a rank(the numbers 1 through 10, followed by the symbols $, %, ^, and &).
+            //The third pedestal requires that you create a class to represent a card of this nature.
+            //192 LEVEL 24 THE CATACOMBS OF THE CLASS
+            //Objectives:
+            //• Define enumerations for card colors and card ranks.
+            //• Define a Card class to represent a card with a color and a rank, as described above.
+            //• Add properties or methods that tell you if a card is a number or symbol card (the equivalent of a
+            //face card).
+            //• Create a main method that will create a card instance for the whole deck(every color with every
+            //rank) and display each(for example, “The Red Ampersand” and “The Blue Seven”).
+            //• Answer this question: Why do you think we used a color enumeration here but made a color class
+            //in the previous challenge?
+
+            try
+            {
+
+                //Console.WriteLine("Define a card with color, ranks or symbols");
+                //CardColor? cardColor = Utilities.EnumReader.ReadEnum<CardColor>("Enter the Card Color: ");
+                //CardRank? cardRank = Utilities.EnumReader.ReadEnum<CardRank>("Enter the Card Rank: ");
+                //CardSymbol? cardSymbol = Utilities.EnumReader.ReadEnum<CardSymbol>("Enter the Card Symbol: ");
+
+                //Card card = new Card();
+
+                CardColor[] cardColors = (CardColor[])Enum.GetValues(typeof(CardColor));
+                CardRank[] cardRanks = (CardRank[])Enum.GetValues(typeof(CardRank));
+
+                List<Card> cards = [];
+
+                foreach (var color in cardColors)
+                {
+                    foreach (var rank in cardRanks)
+                    {
+                        Card card = new(color, rank);
+                        cards.Add(card);
+                    }
+                }
+
+                Console.WriteLine("Here is each card in the list");
+                cards.ForEach(Console.WriteLine);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.ExceptionConsole(ex.Message);
+            }
+
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+
+            #endregion;
+
+            #region - Challenge4
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("***********Challenge4************");
+            Console.WriteLine("*********************************");
+
+            //            Boss Battle The Locked Door 100 XP
+            //The fourth pedestal demands constructing a door class with a locking mechanism that requires a unique
+            //numeric code to unlock.You have done something similar before without using a class, but the locking
+            //mechanism is new. The door should only unlock if the passcode is the right one.The following statements
+            //describe how the door works.
+            //• An open door can always be closed.
+            //• A closed (but not locked) door can always be opened.
+            //• A closed door can always be locked.
+            //• A locked door can be unlocked, but a numeric passcode is needed, and the door will only unlock if
+            //the code supplied matches the door’s current passcode.
+            //• When a door is created, it must be given an initial passcode.
+            //• Additionally, you should be able to change the passcode by supplying the current code and a new
+            //one.The passcode should only change if the correct, current code is given.
+            //Objectives:
+            //• Define a Door class that can keep track of whether it is locked, open, or closed.
+            //• Make it so you can perform the four transitions defined above with methods.
+            //• Build a constructor that requires the starting numeric passcode.
+            //• Build a method that will allow you to change the passcode for an existing door by supplying the
+            //current passcode and new passcode.Only change the passcode if the current passcode is correct.
+            //• Make your main method ask the user for a starting passcode, then create a new Door instance.Allow
+            //the user to attempt the four transitions described above (open, close, lock, unlock) and change the
+            //code by typing in text commands.
+
+            bool isDoorOperationsDone = false;
+            Door door = new Door();
+            while (!isDoorOperationsDone)
+            {
+                Console.WriteLine("1. Open the door.\n"
+                    + "2. Close the door.\n"
+                    + "3. Lock the door.\n"
+                    + "4. Unlock the door.\n"
+                    + "5. Change the password.\n"
+                    + "6. Exit."
+                    );
+
+                if (int.TryParse(Console.ReadLine(), out int userChoice))
+                {
+
+                    switch (userChoice)
+                    {
+                        case 1:
+                            door.ChangeDoorState("open");
+                            break;
+                        case 2:
+                            door.ChangeDoorState("close");
+                            break;
+                        case 3:
+                            door.ChangeDoorState("lock");
+                            break;
+                        case 4:
+                            door.ChangeDoorState("unlock");
+                            break;
+                        case 5:
+                            Console.WriteLine("You want to change the password.\nPlease, provide current password and the new one");
+
+                            if (int.TryParse(Console.ReadLine(), out int currentPw) && int.TryParse(Console.ReadLine(), out int newPw))
+                            {
+                                door.ChangePassword(currentPw, newPw);
+                            }
+                            else Console.WriteLine("Your data is invalid. Please, Input valid passwords");
+
+                            break;
+
+                        case 6:
+                            isDoorOperationsDone = true;
+
+                            break;
+
+                        default:
+                            Utilities.ProgramUtils.ExitProgram(ref isDoorOperationsDone, "input");
+                            break;
+
+                    }
+
+                }
+                else Utilities.ProgramUtils.ExitProgram(ref isDoorOperationsDone);
+
+            }
+
+
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+
+            #endregion;
+           
+
+            #region - Challenge5
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("***********Challenge5************");
+            Console.WriteLine("*********************************");
+            //            Boss Battle The Password Validator 100 XP
+            //The fifth and final pedestal describes a class that represents a concept more abstract than the first four:
+            //a password validator.You must create a class that can determine if a password is valid(meets the rules
+            //defined for a legitimate password). The pedestal initially doesn’t describe any rules, but as you brush the
+            //dust off the pedestal, it vibrates for a moment, and the following rules appear:
+            //• Passwords must be at least 6 letters long and no more than 13 letters long.
+            //• Passwords must contain at least one uppercase letter, one lowercase letter, and one number.
+            //OBJECT-ORIENTED DESIGN 193
+            //• Passwords cannot contain a capital T or an ampersand (&) because Ingelmar in IT has decreed it.
+            //That last rule seems random, and you wonder if the pedestal is just tormenting you with obscure rules.
+            //You ponder for a moment about how to decide if a character is uppercase, lowercase, or a number, but
+            //while scratching your head, you notice a piece of folded parchment on the ground near your feet.You
+            //pick it up, unfold it, and read it:
+            //foreach with a string lets you get its characters!
+            //> foreach (char letter in word)
+            //        { ... }
+            //        char has static methods to categorize letters!
+            //> char.IsUpper('A'), char.IsLower('a'), char.IsDigit('0')
+            //That might be useful information! You are grateful to whoever left it behind.It is signed simply “A.”
+            //Objectives:
+            //• Define a new PasswordValidator class that can be given a password and determine if the
+            //password follows the rules above.
+            //• Make your main method loop forever, asking for a password and reporting whether the password is
+            //allowed using an instance of the PasswordValidator class.
+
+            while (true)
+            {
+                Console.Write("Enter the password: ");
+                string? pw = Console.ReadLine();
+
+                if (pw is null) break;
+
+                if (PasswordValidator.IsPasswordValid(pw)) Console.WriteLine("Password is valid");
+                else Console.WriteLine("Password is not valid");
 
             }
 
@@ -175,12 +389,70 @@ namespace Part2___Catacombs_of_theClass
 
             #endregion;
 
+             */
 
-            #region - Challenge3
+            #region - Challenge6
             Console.WriteLine("\n\n*********************************");
-            Console.WriteLine("***********Challenge3************");
+            Console.WriteLine("***********Challenge6************");
             Console.WriteLine("*********************************");
 
+            //            Narrative The Chamber of Design
+            //As you finish the final class and place its complete definition back on its pedestal, the writing on each
+            //pedestal begins to glow a reddish-orange.A beam forms from each pedestal, extending upward towards
+            //the high cavernous ceiling.Additional runes on the wall begin to shine as well, and the far walls slide
+            //apart, revealing an opening further into the Catacombs.
+            //You pass through to the next chamber and find three more pedestals with etched text.On the floor, in
+            //a ring running around the three pedestals, lie the words, “Only a True Programmer can design a system
+            //of objects for the ancient games of the people.”
+            //You must make an object-oriented design (not a complete program) for each game described on the
+            //three pedestals in the room’s center to continue further.
+            //The following three challenges will help you practice object-oriented design.You do not need
+            //to make the full game! You only need a starting point in the form of CRC cards (or a suitable
+            //alternative). Some parts of these games might be tough to write code for, given our current
+            //knowledge.For example, the Hangman game would be easier to read a list of words from a
+            //file, a topic covered in Level 39.
+            //Boss Battle Rock-Paper-Scissors 150 XP
+            //The first design pedestal requires you to provide an object-oriented design—a set of objects, classes,
+            //and how they interact—for the game of Rock-Paper-Scissors, described below:
+            //• Two human players compete against each other.
+            //• Each player picks Rock, Paper, or Scissors.
+            //194 LEVEL 24 THE CATACOMBS OF THE CLASS
+            //• Depending on the players’ choices, a winner is determined: Rock beats Scissors, Scissors beats Paper,
+            //Paper beats Rock.If both players pick the same option, it is a draw.
+            //• The game must display who won the round.
+            //• The game will keep running rounds until the window is closed but must remember the historical
+            //record of how many times each player won and how many draws there were.
+            //Objectives:
+            //• Use CRC cards (or a suitable alternative) to outline the objects and classes that may be needed to
+            //make the game of Rock-Paper-Scissors.You do not need to create this full game; just come up
+            //with a potential design as a starting point.
+
+            RockPaperScissors rockPaperScissors = new RockPaperScissors();
+            rockPaperScissors.Init();
+
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+
+            #endregion; 
+
+
+            #region - Challenge7
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("***********Challenge7************");
+            Console.WriteLine("*********************************");
+
+
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+
+            #endregion; 
+
+            #region - Challenge8
+            Console.WriteLine("\n\n*********************************");
+            Console.WriteLine("***********Challenge8************");
+            Console.WriteLine("*********************************");
 
 
             Console.WriteLine("\n\n*********************************");
@@ -189,26 +461,10 @@ namespace Part2___Catacombs_of_theClass
 
             #endregion;
 
-
-            #region - Challenge4
+            #region - Challenge9
             Console.WriteLine("\n\n*********************************");
-            Console.WriteLine("***********Challenge4************");
+            Console.WriteLine("***********Challenge9************");
             Console.WriteLine("*********************************");
-
-
-
-            Console.WriteLine("\n\n*********************************");
-            Console.WriteLine("*********************************");
-            Console.WriteLine("*********************************");
-
-            #endregion;
-
-
-            #region - Challenge5
-            Console.WriteLine("\n\n*********************************");
-            Console.WriteLine("***********Challenge5************");
-            Console.WriteLine("*********************************");
-
 
 
             Console.WriteLine("\n\n*********************************");
@@ -219,3 +475,4 @@ namespace Part2___Catacombs_of_theClass
         }
     }
 }
+
