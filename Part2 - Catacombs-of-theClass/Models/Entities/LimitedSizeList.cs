@@ -61,6 +61,11 @@ namespace Part2___Catacombs_of_theClass.Models.Entities
             _list.CopyTo(array, arrayIndex);
         }
 
+        public int IndexOf(T item)
+        {
+            return _list.IndexOf(item);
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return _list.GetEnumerator();

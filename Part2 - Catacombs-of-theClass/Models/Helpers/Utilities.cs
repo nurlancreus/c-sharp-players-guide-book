@@ -98,6 +98,28 @@ namespace Part2___Catacombs_of_theClass.Models.Helpers
 
                 }
             }
+
+            public static char ReadChar(string msg)
+            {
+
+                while (true)
+                {
+                    try
+                    {
+                        Console.Write(msg);
+
+                        if (Char.TryParse(Console.ReadLine(), out char input))
+                        {
+                            return input;
+                        }
+                        else throw new FormatException("Not a correct format, please try again.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.ExceptionConsole(ex.Message);
+                    }
+                }
+            }
         }
     }
 }

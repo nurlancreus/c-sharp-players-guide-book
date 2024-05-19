@@ -20,7 +20,7 @@ namespace Part2___Catacombs_of_theClass.Models.Helpers
         public static void SuccessConsole(string message)
         {
             Console.BackgroundColor = ConsoleColor.Green;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.Write(message);
             Console.ResetColor();
             Console.WriteLine();

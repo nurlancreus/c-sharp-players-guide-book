@@ -73,6 +73,7 @@ namespace Part2___Catacombs_of_theClass.Models.Entities
             Console.WriteLine("Would you like to play \"Puzzle 15\" game? (y/n)");
             if (char.TryParse(Console.ReadLine(), out char userAnswer) && userAnswer == 'y')
             {
+                _tour = 0;
                 _playGame = true;
                 Board = new Board();
                 Board.ShuffleBoard();
@@ -91,7 +92,6 @@ namespace Part2___Catacombs_of_theClass.Models.Entities
 
         private void PlayGame()
         {
-            //Console.Clear();
             Console.WriteLine("Board:");
             Board?.DisplayBoard();
 
