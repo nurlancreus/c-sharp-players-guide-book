@@ -71,7 +71,8 @@ namespace Part2___Catacombs_of_theClass.Models.Helpers
             }
         }
 
-        internal static class ProgramUtils {
+        internal static class ProgramUtils
+        {
             public static void ExitProgram(ref bool done, string input = "option")
             {
                 Console.WriteLine("invalid {0}.", input);
@@ -79,8 +80,24 @@ namespace Part2___Catacombs_of_theClass.Models.Helpers
                 Thread.Sleep(1000);
                 done = true;
             }
-        }
 
-        
+            public static double ReadNumber(string msg)
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Console.Write(msg);
+                        if (Double.TryParse(Console.ReadLine(), out double value)) return value;
+                        else throw new FormatException("Your input is not in the correct format");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.ExceptionConsole(ex.Message);
+                    }
+
+                }
+            }
+        }
     }
 }

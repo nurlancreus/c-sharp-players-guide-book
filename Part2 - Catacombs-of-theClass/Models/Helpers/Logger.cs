@@ -14,6 +14,16 @@ namespace Part2___Catacombs_of_theClass.Models.Helpers
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(message);
             Console.ResetColor();
+            Console.WriteLine();
+        }
+
+        public static void SuccessConsole(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(message);
+            Console.ResetColor();
+            Console.WriteLine();
         }
     }
 }
