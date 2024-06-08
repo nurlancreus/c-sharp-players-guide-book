@@ -12,6 +12,18 @@ using System.Buffers.Text;
 using System.Diagnostics.Metrics;
 using System.Security.Cryptography;
 using OOP_part3.Challange2;
+using static System.Net.Mime.MediaTypeNames;
+using System.Data.Common;
+using OOP_part3.Challenge3;
+using System.Drawing;
+using System.Text;
+using System.Threading;
+using OOP_part3.Challenge4;
+using SwordR = OOP_part3.Challenge4.Sword;
+using static OOP_part3.Program;
+using System.Net.NetworkInformation;
+using System.Threading.Channels;
+using OOP_part3.Challenge5;
 
 namespace OOP_part3
 {
@@ -142,6 +154,7 @@ namespace OOP_part3
             #endregion; 
             */
 
+            /*
             #region-LEVEL26-Polymorphism
 
             Console.WriteLine("*********************************");
@@ -239,6 +252,280 @@ namespace OOP_part3
             Console.WriteLine("*********************************");
             Console.WriteLine("*********************************");
             Console.WriteLine("*********************************");
+
+            #endregion;
+            */
+
+
+            /*
+            #region LEVEL28-Structs
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*************LEVEL28*************");
+            Console.WriteLine("*********************************");
+
+            //            Challenge Room Coordinates 50 XP
+            //The time to enter the Fountain of Objects draws closer.While you don’t know what to expect, you have
+            //found some scrolls that describe the area in ancient times. It seems to be structured as a set of rooms
+            //in a grid-like arrangement.
+            ////Locations of the room may be represented as a row and column, and you take it upon yourself to try to
+            //capture this concept with a new struct definition.
+            //Objectives:
+            //• Create a Coordinate struct that can represent a room coordinate with a row and column.
+
+            //• Ensure Coordinate is immutable.
+            //• Make a method to determine if one coordinate is adjacent to another (differing only by a single row
+            //or column).
+            //• Write a main method that creates a few coordinates and determines if they are adjacent to each
+            //other to prove that it is working correctly.
+
+
+            static Coordinate GetCoordinate(string order)
+            {
+                Console.WriteLine($"Get {order} coordinate's X and Y..");
+
+                Console.Write("X: ");
+                if (!int.TryParse(Console.ReadLine(), out int x)) throw new FormatException("The input is not in the correct format");
+
+                Console.Write("Y: ");
+
+                if (!int.TryParse(Console.ReadLine(), out int y)) throw new FormatException("The input is not in the correct format");
+                
+                return new Coordinate(x, y);
+
+            }
+
+            Coordinate? coord1 = null;
+            Coordinate? coord2 = null;
+
+            bool isOperationsDone = false;
+
+            while (!isOperationsDone)
+            {
+                try
+                {
+                    Console.WriteLine("Make structs?");
+
+                    if (!char.TryParse(Console.ReadLine(), out char answer)) throw new FormatException("Your input is not in the correct format");
+
+                    if (char.ToLowerInvariant(answer) == 'y')
+                    {
+
+                        coord1 ??= GetCoordinate("first");
+
+                        coord2 ??= GetCoordinate("second");
+
+                        if (coord1 is Coordinate c1 && coord2 is Coordinate c2)
+                        {
+                            isOperationsDone = true;
+                            Console.WriteLine("You already define your 2 \"Coordinate\" structs..\nLet's learn if they're adjacent to one another..");
+
+                            if (c1.IsAdjacentTo(c2))
+                            {
+                                Console.WriteLine($"They're adjacent..\nCoord1's X: {c1.X} and Y: {c1.Y} && Coord2's X: {c2.X} and Y: {c2.Y}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"They're NOT adjacent..\nCoord1's X: {c1.X} and Y: {c1.Y} && Coord2's X: {c2.X} and Y: {c2.Y}");
+
+                            }
+                        }
+
+
+                    }
+                    else if (char.ToLowerInvariant(answer) == 'n')
+                    {
+                        isOperationsDone = true;
+                        Console.WriteLine("You exit the program..");
+                    }
+                    else throw new FormatException("Your input is not in the correct format");
+                }
+                catch (Exception e) { Console.WriteLine(e.Message); }
+
+
+            }
+
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*********************************");
+            #endregion;
+            */
+
+            /*
+            #region Level29 - Records
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*************LEVEL29*************");
+            Console.WriteLine("*********************************");
+
+            //            Challenge War Preparations 100 XP
+            //As you pass through the city of Rocaard, two blacksmiths, Cygnus and Lyra, approach you. “We know
+            //where this is headed.A confrontation with the Uncoded One’s forces,” Lyra says. Cygnus continues,
+            //“You’re going to need an army at your side—one prepared to do battle.We forge enchanted swords and
+            //will do everything we can to support this cause.We need the Power of Programming to flow unfettered
+            //too.We want to help, but we can’t equip an entire army without the help of a program to aid in crafting
+            //swords.” They describe the program they need, and you dive in to help.
+            //Objectives:
+            //• Swords can be made out of any of the following materials: wood, bronze, iron, steel, and the rare
+            //binarium.Create an enumeration to represent the material type.
+            //• Gemstones can be attached to a sword, which gives them strange powers through Cygnus and Lyra’s
+            //touch.Gemstone types include emerald, amber, sapphire, diamond, and the rare bitstone.Or no
+            //gemstone at all.Create an enumeration to represent a gemstone type.
+            //• Create a Sword record with a material, gemstone, length, and crossguard width.
+            //• In your main program, create a basic Sword instance made out of iron and with no gemstone. Then
+            //create two variations on the basic sword using with expressions.
+            //• Display all three sword instances with code like Console.WriteLine(original);
+
+            // Get material or gemstone
+            static T GetMaterial<T>(string enums) where T : Enum
+            {
+                Console.WriteLine($"Here are the {enums}: {string.Join(", ", Enum.GetNames(typeof(T)))}\nChoose one:");
+
+                foreach (T item in Enum.GetValues(typeof(T)))
+                {
+                    Console.WriteLine($"{Convert.ToInt32(item)} for: {item}");
+                }
+
+                Console.Write("Your choice: ");
+                if (int.TryParse(Console.ReadLine(), out int materialChoice))
+                {
+                    if (Enum.IsDefined(typeof(T), materialChoice))
+                    {
+                        return (T)(object)materialChoice;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice. Please try again.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a number.");
+                }
+
+                // Optionally handle the case where input is invalid, here we use recursion for simplicity
+                return GetMaterial<T>(enums);
+            }
+
+            Console.WriteLine("Welcome to the Blacksmith.\nMake yourself a sword");
+
+            // Get Copy Sword
+            static SwordR GetCopySword(string order, SwordR ogSword)
+            {
+                Console.WriteLine($"Make {order}");
+
+                Console.Write("Add the sword length: ");
+                if (!int.TryParse(Console.ReadLine(), out int swordLength)) throw new FormatException("The input is not in the correct format.");
+
+
+                Console.Write("Add the cross guard width: ");
+                if (!int.TryParse(Console.ReadLine(), out int crossWidth)) throw new FormatException("The input is not in the correct format.");
+
+
+                SwordR copySword = ogSword with
+                {
+                    Material = GetMaterial<Material>("Materials"),
+                    Gemstone = (Gemstone?)GetMaterial<Gemstone>("Gemstones"),
+                    Length = swordLength,
+                    CrossGuardW = crossWidth
+                };
+
+                return copySword;
+
+            }
+
+            bool isOperationsDone = false;
+
+            SwordR? copySword1 = null;
+            SwordR? copySword2 = null;
+
+            while (!isOperationsDone)
+            {
+
+                try
+                {
+                    Console.WriteLine("Do you want to make a sword? (y/n)");
+
+                    if (!char.TryParse(Console.ReadLine(), out char answer)) throw new FormatException("The input is not in the correct format. It should be either 'y' or 'n'");
+
+                    if (char.ToLowerInvariant(answer) == 'y')
+                    {
+                        SwordR ogSword = new(Material.Iron);
+
+                        Console.WriteLine("Do you want to make a copy sword? (y/n)");
+
+                        if (!char.TryParse(Console.ReadLine(), out char a)) throw new FormatException("The input is not in the correct format. It should be either 'y' or 'n'");
+
+                        if (char.ToLowerInvariant(a) == 'y')
+                        {
+                        
+                            copySword1 ??= GetCopySword("First Copy", ogSword);
+                            copySword2 ??= GetCopySword("Second Copy", ogSword);
+
+                            if (copySword1 is SwordR sw1 && copySword2 is SwordR sw2)
+                            {
+                                SwordR[] swords = [ogSword, sw1, sw2];
+
+                                for (int i = 0; i < swords.Length; i++)
+                                {
+                                    int index = i + 1;
+
+                                    Console.WriteLine($"Sword {(index == 1 ? "Original" : $"Copy {index}")}: {swords[i]}");
+                                }
+                            }
+
+                            isOperationsDone = true;
+                        }
+                        else
+                        {
+                            isOperationsDone = true;
+                            Console.WriteLine("Exit the blacksmith");
+                        }
+                    }
+                    else
+                    {
+
+                        isOperationsDone = true;
+                        Console.WriteLine("Exit the blacksmith");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            #endregion;
+            */
+
+            #region Level30 - Generics
+            Console.WriteLine("*********************************");
+            Console.WriteLine("*************LEVEL30*************");
+            Console.WriteLine("*********************************");
+
+            //            Challenge Colored Items 100 XP
+            //You have a sword, a bow, and an axe in front of you, defined like this:
+            //public class Sword { }
+            //        public class Bow { }
+            //        public class Axe { }
+            //        You want to associate a color with these items(or any item type). You could make ColoredSword
+            //derived from Sword that adds a Color property, but doing this for all three item types will be
+            //painstaking.Instead, you define a new generic ColoredItem class that does this for any item.
+            //Objectives:
+            //• Put the three class definitions above into a new project.
+            //• Define a generic class to represent a colored item.It must have properties for the item itself (generic
+            //in type) and a ConsoleColor associated with it.
+            //• Add a void Display() method to your colored item type that changes the console’s foreground
+            //color to the item’s color and displays the item in that color. (Hint: It is sufficient to just call
+            //ToString() on the item to get a text representation.)
+            //• In your main method, create a new colored item containing a blue sword, a red bow, and a green axe.
+            //Display all three items to see each item displayed in its color.
+
+            ColoredItem<Challenge5.Sword> sword = new ColoredItem<Challenge5.Sword>(new (), ConsoleColor.Blue);
+            ColoredItem<Challenge5.Bow> bow = new ColoredItem<Challenge5.Bow>(new (), ConsoleColor.Red);
+            ColoredItem<Axe> axe = new ColoredItem<Axe>(new Axe(), ConsoleColor.Green);
+
+            sword.Display();
+            bow.Display();
+            axe.Display();
 
             #endregion;
         }
